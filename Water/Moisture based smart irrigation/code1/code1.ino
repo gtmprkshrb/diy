@@ -1,10 +1,13 @@
-#define soilMoisture A0                   
-#define high 550
-#define low 10
-#define needWater 30//percent
+//soil moisture sensor
+#define soilMoisture A0 //connect analog pin of soil moisture sensor to A0 of Arduino                   
+//for calibration
+#define high 550 //maximum value detected by soil moisture sensor
+#define low 10 //minimum value detected by soil moisture sensor
+#define needWater 30 //start flow if soil moisture is greater than 30 percent
 
-#define flowSensor 2
-#define reqWater 2000//in mL
+//flow sensor
+#define flowSensor 2//connect data pin of flow sensor to D2 of Arduino
+#define reqWater 2000//flow is stopped after 2000 mL
 byte sensorInterrupt = 0;
 // The hall-effect flow sensor outputs approximately 7.5 pulses per second per
 // litre/minute of flow.
@@ -16,7 +19,7 @@ unsigned long totalMilliLitres;
 unsigned long oldTime;
 unsigned long moisture;
 
-#define relay 8
+#define relay 8//connect data pin of relay to D8 of Arduino
 
 void setup()
 {
