@@ -1,9 +1,8 @@
 //soil moisture sensor
 #define soilMoisture A0 //connect analog pin of soil moisture sensor to A0 of Arduino                   
 //for calibration
-#define high 550 //maximum value detected by soil moisture sensor
+#define high 1025 //maximum value detected by soil moisture sensor
 #define low 10 //minimum value detected by soil moisture sensor
-#define needWater 30 //start flow if soil moisture is greater than 30 percent
 
 //flow sensor
 #define flowSensor 2//connect data pin of flow sensor to D2 of Arduino
@@ -18,6 +17,7 @@ unsigned int flowMilliLitres;
 unsigned long totalMilliLitres;
 unsigned long oldTime;
 unsigned long moisture;
+float percentage;
 
 #define relay 8//connect data pin of relay to D8 of Arduino
 
@@ -37,18 +37,23 @@ void setup()
   flowMilliLitres   = 0;
   totalMilliLitres  = 0;
   oldTime           = 0;
-  moisture          =100;
+  moisture          =0;
+  percentage=100;
   attachInterrupt(sensorInterrupt, pulseCounter, FALLING);
 }
 
 void loop()
 {
-  if(totalMilliLitres==0)//read soil moisture only when no flow
+  if(flowRate<16)//read soil moisture only when no flow
   {
+   totalMilliLitres  = 0;
    moisture=analogRead(soilMoisture);
-   moisture=map(moisture,low,high,0,100);//express as a percentage
+   Serial.println(moisture);
+   percentage=100-(moisture*0.0975);//express as a percentage
+   Serial.println(percentage);
+   delay(3000);
   }
-  if(moisture<=needWater)
+  if(percentage<=30)//start flow if soil moisture is greater than 30 percent
   {
   if((millis() - oldTime) > 1000)    // Only process counters once per second
   { 
@@ -89,9 +94,6 @@ void loop()
     Serial.print("Output Liquid Quantity: ");        
     Serial.print(totalMilliLitres);
     Serial.println("mL"); 
-    Serial.print("\t");       // Print tab space
-  Serial.print(totalMilliLitres/1000);
-  Serial.print("L"); 
 
     // Reset the pulse counter so we can start incrementing again
     pulseCount = 0;
@@ -99,16 +101,16 @@ void loop()
     // Enable the interrupt again now that we've finished sending output
     attachInterrupt(sensorInterrupt, pulseCounter, FALLING);
   }
+  }
     if(totalMilliLitres>reqWater)
 {   
-  digitalWrite(relay, HIGH);   //off
+  digitalWrite(relay, LOW);   //off
   delay(2000);                       // wait for a second
 }
 else
 {
-  digitalWrite(relay, LOW);    // on                         // wait for a second
+  digitalWrite(relay, HIGH);    // on                         // wait for a second
 }
-  }
 }
 
 void pulseCounter()
