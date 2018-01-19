@@ -1,8 +1,10 @@
 //soil moisture sensor
 #define soilMoisture A0 //connect analog pin of soil moisture sensor to A0 of Arduino                   
-//for calibration
-#define high 1025 //maximum value detected by soil moisture sensor
-#define low 10 //minimum value detected by soil moisture sensor
+//calibration
+//maximum value detected(dry) 1025
+//minimum value detected(wet) 10
+//percentage of moisture= 100-(detected/maximum*100)
+//100/maximum=100/1025=0.0975
 
 //flow sensor
 #define flowSensor 2//connect data pin of flow sensor to D2 of Arduino
@@ -47,10 +49,14 @@ void loop()
   if(flowRate<16)//read soil moisture only when no flow
   {
    totalMilliLitres  = 0;
-   moisture=analogRead(soilMoisture);
-   Serial.println(moisture);
+   moisture=analogRead(soilMoisture);//read input from pin A0(soilMoisture)
+   Serial.print("Moisture: ");
+   Serial.print(moisture);
+   Serial.print("\t");
    percentage=100-(moisture*0.0975);//express as a percentage
-   Serial.println(percentage);
+   Serial.print("Percentage: ");
+   Serial.print(percentage);
+   Serial.println("%");
    delay(3000);
   }
   if(percentage<=30)//start flow if soil moisture is greater than 30 percent
