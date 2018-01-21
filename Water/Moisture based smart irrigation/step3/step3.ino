@@ -1,6 +1,5 @@
 //soil moisture sensor
 #define soilMoisture A0 //connect analog pin of soil moisture sensor to A0 of Arduino                   
-#define reqpercent 30//start flow if moisture is less than 30 percent
 //calibration
 //maximum value detected(dry) 1025
 //minimum value detected(wet) 10
@@ -11,7 +10,6 @@ float percentage;
 
 //flow sensor
 #define flowSensor 2//connect data pin of flow sensor to D2 of Arduino
-#define reqWater 2000//flow is stopped after 2000 mL
 byte sensorInterrupt = 0;
 // The hall-effect flow sensor outputs approximately 7.5 pulses per second per
 // litre/minute of flow.
@@ -22,11 +20,8 @@ unsigned int flowMilliLitres;
 unsigned long totalMilliLitres;
 unsigned long oldTime;
 
-//relay
-#define relay 8//connect data pin of relay to D8 of Arduino
-
-void setup()
-{
+void setup() {
+  // put your setup code here, to run once:
    // Initialize a serial connection for reporting values to the host
   Serial.begin(115200);
 
@@ -42,16 +37,13 @@ void setup()
   moisture          =0;
   percentage=100;
   attachInterrupt(sensorInterrupt, pulseCounter, FALLING);
-    
-  pinMode(relay, OUTPUT);
-  pinMode(relay,LOW);//off
 }
 
-void loop()
-{
+void loop() {
+  // put your main code here, to run repeatedly:
   if(flowRate<0)//read soil moisture only when no flow
   {
-   totalMilliLitres  = 0;//reset
+   totalMilliLitres  = 0;
    moisture=analogRead(soilMoisture);//read input from pin A0(soilMoisture)
    Serial.print("Moisture: ");
    Serial.print(moisture);
@@ -62,8 +54,8 @@ void loop()
    Serial.println("%");
    delay(3000);
   }
-  if(percentage<=reqpercent)//start flow if soil moisture is lesser than 30 percent
-  {
+  
+  //measure flow
   if((millis() - oldTime) > 1000)    // Only process counters once per second
   { 
     // Disable the interrupt while calculating flow rate and sending the value to
@@ -110,17 +102,6 @@ void loop()
     // Enable the interrupt again now that we've finished sending output
     attachInterrupt(sensorInterrupt, pulseCounter, FALLING);
   }
-  }
-    if(totalMilliLitres>reqWater)
-{   
-  digitalWrite(relay, LOW);   //off
-  delay(2000);                       // wait for a second
-}
-else
-{
-  digitalWrite(relay, HIGH);    // on
-  delay(2000)                     // wait for a second
-}
 }
 
 void pulseCounter()
