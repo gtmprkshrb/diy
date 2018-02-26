@@ -1,13 +1,15 @@
 #include <Wire.h>
 #include <LiquidCrystal_PCF8574.h>
 
-LiquidCrystal_PCF8574 lcd(0x27);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_PCF8574 lcd(0x3F);  // set the LCD address that was displayed
 
 int show;
 
 void setup()
 {
   int error;
+
+  digitalWrite(2,HIGH);//VCC connection
 
   Serial.begin(115200);
   Serial.println("LCD...");
@@ -18,7 +20,7 @@ void setup()
 
   // See http://playground.arduino.cc/Main/I2cScanner
   Wire.begin();
-  Wire.beginTransmission(0x27);
+  Wire.beginTransmission(0x3F);// set the LCD address that was displayed
   error = Wire.endTransmission();
   Serial.print("Error: ");
   Serial.print(error);
@@ -31,64 +33,13 @@ void setup()
   } // if
 
   lcd.begin(16, 2); // initialize the lcd
-  show = 0;
 } // setup()
 
 void loop()
 {
-  if (show == 0) {
     lcd.setBacklight(255);
-    lcd.home(); lcd.clear();
-    lcd.print("Hello LCD");
-    delay(1000);
-
-    lcd.setBacklight(0);
-    delay(400);
-    lcd.setBacklight(255);
-
-  } else if (show == 1) {
-    lcd.clear();
-    lcd.print("Cursor On");
-    lcd.cursor();
-
-  } else if (show == 2) {
-    lcd.clear();
-    lcd.print("Cursor Blink");
-    lcd.blink();
-
-  } else if (show == 3) {
-    lcd.clear();
-    lcd.print("Cursor OFF");
-    lcd.noBlink();
-    lcd.noCursor();
-
-  } else if (show == 4) {
-    lcd.clear();
-    lcd.print("Display Off");
-    lcd.noDisplay();
-
-  } else if (show == 5) {
-    lcd.clear();
-    lcd.print("Display On");
-    lcd.display();
-
-  } else if (show == 7) {
-    lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("*** first line.");
+    lcd.print("Total output:");
     lcd.setCursor(0, 1);
-    lcd.print("*** second line.");
-
-  } else if (show == 8) {
-    lcd.scrollDisplayLeft();
-  } else if (show == 9) {
-    lcd.scrollDisplayLeft();
-  } else if (show == 10) {
-    lcd.scrollDisplayLeft();
-  } else if (show == 11) {
-    lcd.scrollDisplayRight();
-  } // if
-
-  delay(2000);
-  show = (show + 1) % 12;
+    lcd.print("L");
 } // loop()

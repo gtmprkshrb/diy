@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_PCF8574.h>
 
-LiquidCrystal_PCF8574 lcd(0x27);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_PCF8574 lcd(0x3F);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 int show;
 byte statusLed    = 13;
@@ -37,7 +37,7 @@ void setup()
 
   // See http://playground.arduino.cc/Main/I2cScanner
   Wire.begin();
-  Wire.beginTransmission(0x27);
+  Wire.beginTransmission(0x3F);
   error = Wire.endTransmission();
   Serial.print("Error: ");
   Serial.print(error);
@@ -112,15 +112,11 @@ void loop()
     Serial.print(totalMilliLitres);
     Serial.println("mL"); 
     Serial.print("\t");       // Print tab space
-    Serial.print(totalMilliLitres/1000);
-    Serial.print("L");
-    lcd.clear();
+    //lcd
+    lcd.setBacklight(255);
     lcd.setCursor(0, 0);
-    lcd.print("Flow rate:");
-    lcd.print(flowRate);
-    lcd.print("L/min");
-    lcd.setCursor(0, 1);
     lcd.print("Total output:");
+    lcd.setCursor(0, 1);
     lcd.print(totalMilliLitres/1000);
     lcd.print("L");
     // Reset the pulse counter so we can start incrementing again
