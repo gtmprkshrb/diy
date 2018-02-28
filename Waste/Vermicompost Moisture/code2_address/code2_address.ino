@@ -9,6 +9,8 @@ void setup()
 {
   int error;
 
+  digitalWrite(2,HIGH);//VCC connection
+
   Serial.begin(115200);
   Serial.println("LCD...");
 
