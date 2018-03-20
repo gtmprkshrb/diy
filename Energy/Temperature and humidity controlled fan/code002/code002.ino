@@ -18,7 +18,7 @@ void setup() {
   dht.begin();
 
   pinMode(relay, OUTPUT);//digital pin8
-  pinMode(relay,HIGH);//off by default
+  pinMode(relay,LOW);//off by default
 }
 
 void loop() {
@@ -60,11 +60,12 @@ void loop() {
   
  if((t>=25)&&(h<=30))//required temperature is 25*C and required humidity is 30%
 {   
-  digitalWrite(relay, LOW);   //on
-  delay(900000);                       // wait for fifteen minutes
+  digitalWrite(relay, HIGH);   //on
+  delay(10000);                       // wait for fifteen minutes
 }
 else
 {
-  digitalWrite(relay, HIGH);    // off
+  digitalWrite(relay, LOW);    // off
+  delay(1000);
 }
 }
