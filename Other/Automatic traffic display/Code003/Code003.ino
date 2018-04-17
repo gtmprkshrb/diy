@@ -1,36 +1,48 @@
-/*
-  Blink
-  Turns on an LED on for one second, then off for one second, repeatedly.
-  Common Ground version
-*/
 
+#define trigPin 11
+#define echoPin 12
 int r = 9;
 int g = 8;
 int b = 7;
-// the setup function runs once when you press reset or power the board
+int timetaken, dist;
+
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
+  Serial.begin (9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
   pinMode(r, OUTPUT);
   pinMode(g, OUTPUT);
   pinMode(b, OUTPUT);
 }
 
-// the loop function runs over and over again forever
 void loop() {
-  blinkred();
-  blinkblue();
-  blinkgreen();
-  blinkyellow();
-  blinkpurple();
-  blinkorange();
-  blinkwhite();// wait for a second
-  red();
-  blue();
-  green();
-  yellow();
-  purple();
-  orange();
-  white();
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(1000);
+  digitalWrite(trigPin, LOW);
+  timetaken = pulseIn(echoPin, HIGH);
+  dist = (timetaken / 2) * 0.034049 ;
+  if (dist >= 300 || dist <= 0) {
+    Serial.print("Out Of Range");
+  }
+  else {
+
+    Serial.println("\n Distance in CM: ");
+
+    Serial.print( dist);
+
+  }
+  delay(500);
+
+  if(dist <= 100){
+    green();
+  }
+  else if (dist >=101 && dist <= 200){
+    orange();
+  }
+  else {
+    red();
+  }
 }
 
 void blinkred() {

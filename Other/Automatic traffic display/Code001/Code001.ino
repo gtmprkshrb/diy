@@ -1,5 +1,6 @@
-#define trigPin 7
-#define echoPin 8
+
+#define trigPin 11
+#define echoPin 12
 
 void setup() {
   Serial.begin (9600);
@@ -14,8 +15,8 @@ void loop() {
   digitalWrite(trigPin, LOW);
   timetaken = pulseIn(echoPin, HIGH);
   dist = (timetaken / 2) * 0.034049 ;
-  if (dist >= 300 || dist <= 2) {
-    Serial.print("\n Out Of Range");
+  if (dist >= 300 || dist <= 0) {
+    Serial.print("Out Of Range");
   }
   else {
 
@@ -24,5 +25,5 @@ void loop() {
     Serial.print( dist);
 
   }
-  delay(1000);
+  delay(500);
 }
