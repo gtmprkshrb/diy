@@ -1,7 +1,7 @@
 #include<NewPing.h>
 
-#define trigger 7//attach trigger to D7 of Arduino UNO
-#define echo 8//attach echo pin to D8 of Arduino UNO
+#define trigger 12//attach trigger to D7 of Arduino UNO
+#define echo 11//attach echo pin to D8 of Arduino UNO
 
 #define max_distance 100//distance between sensors and opposite side is 100cm
 

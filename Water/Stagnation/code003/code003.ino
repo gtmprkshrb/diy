@@ -1,20 +1,27 @@
-#define RED 5//red pin of led attached to D5 of Arduino UNO
-#define GREEN 6//green pin of led attached to D6 of Arduino UNO
+/*
+ * Uses Common cathode (Ground) RGB LED
+ */
 
 #include<NewPing.h>
 
-#define trigger 7//attach trigger to D7 of Arduino UNO
-#define echo 8//attach echo pin to D8 of Arduino UNO
+#define trigger 12//attach trigger to D7 of Arduino UNO
+#define echo 11//attach echo pin to D8 of Arduino UNO
 
-#define max_distance 20//distance between sensors and opposite side of bin is 20cm
+int r = 9;
+int g = 8;
+int b = 7;
+
+
+#define max_distance 100//distance between sensors and opposite side is 100cm
 
 NewPing sensor(trigger,echo,max_distance);
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  pinMode(RED,OUTPUT);
-  pinMode(GREEN,OUTPUT);
+  pinMode(r, OUTPUT);
+  pinMode(g, OUTPUT);
+  pinMode(b, OUTPUT);
 }
 
 void loop() {
@@ -24,16 +31,135 @@ Serial.print("Distance:");
 Serial.println(dist);
 Serial.print(" cm");
 
-if(dist<=max_distance)
-{
-  delay(10000);
-  if(dist<max_distance)//even after delay
-    digitalWrite(RED,HIGH);
+if (dist <= 10){
+  red();
 }
-else
-{
-  digitalWrite(GREEN,HIGH);
+else if (dist >= 11 && dist <= 20){
+  orange();
 }
-delay(30000);//wait 30s
+else {
+  green();
+}
+}
+
+void blinkred() {
+  digitalWrite(r, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(g, HIGH);
+  digitalWrite(b, HIGH);
+  delay(1000);                       // wait for a second
+  digitalWrite(r, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, HIGH);
+  digitalWrite(b, HIGH);
+  delay(1000);
+}
+
+void blinkblue() {
+  off();                  // wait for a second
+  digitalWrite(r, HIGH);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, HIGH);
+  digitalWrite(b, LOW);
+  delay(1000);
+}
+
+void blinkgreen() {
+  off();                       // wait for a second
+  digitalWrite(r, HIGH);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, LOW);
+  digitalWrite(b, HIGH);
+  delay(1000);
+}
+
+void blinkpurple() {
+  off();                         // wait for a second
+  digitalWrite(r, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, HIGH);
+  digitalWrite(b, LOW);
+  delay(1000);
+}
+void blinkorange() {
+  off();                        // wait for a second
+  digitalWrite(r, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, LOW);
+  digitalWrite(b, HIGH);
+  delay(1000);
+}
+
+void blinkyellow() {
+  off();                      // wait for a second
+  digitalWrite(r, HIGH);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, LOW);
+  digitalWrite(b, LOW);
+  delay(1000);
+}
+
+void blinkwhite() {
+  off();                      // wait for a second
+  digitalWrite(r, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, LOW);
+  digitalWrite(b, LOW);
+  delay(1000);
+}
+
+//nonblink
+void red() {                      // wait for a second
+  digitalWrite(r, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, HIGH);
+  digitalWrite(b, HIGH);
+  delay(2000);
+  off();
+}
+
+void blue() {                   // wait for a second
+  digitalWrite(r, HIGH);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, HIGH);
+  digitalWrite(b, LOW);
+  delay(2000);
+  off();
+}
+
+void green() {                    // wait for a second
+  digitalWrite(r, HIGH);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, LOW);
+  digitalWrite(b, HIGH);
+  delay(2000);
+  off();
+}
+
+void purple() {                      // wait for a second
+  digitalWrite(r, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, HIGH);
+  digitalWrite(b, LOW);
+  delay(2000);
+  off();
+}
+void orange() {                      // wait for a second
+  digitalWrite(r, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, LOW);
+  digitalWrite(b, HIGH);
+  delay(2000);
+  off();
+}
+
+void yellow() {                     // wait for a second
+  digitalWrite(r, HIGH);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, LOW);
+  digitalWrite(b, LOW);
+  delay(2000);
+  off();
+}
+
+void white() {               // wait for a second
+  digitalWrite(r, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, LOW);
+  digitalWrite(b, LOW);
+  delay(2000);
+  off();
+}
+
+void off() {
+  digitalWrite(r, HIGH);    // turn the LED off by making the voltage LOW
+  digitalWrite(g, HIGH);
+  digitalWrite(b, HIGH);
+  delay(1000);
 }
 
