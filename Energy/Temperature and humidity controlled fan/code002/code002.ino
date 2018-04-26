@@ -1,7 +1,7 @@
-#include "DHT.h"
+#include <DHT.h>
 
 #define DHTPIN 2    //digital pin 2 is connected to dht
-#define relay 8 //digital pin 8 is connected to relay
+#define relay 3 //digital pin 3 is connected to relay
 
 // Uncomment whatever type you're using!
 #define DHTTYPE DHT11   // DHT 11
@@ -58,14 +58,14 @@ void loop() {
   Serial.print(hif);
   Serial.println(" *F");
   
- if((t>=25)&&(h<=30))//required temperature is 25*C and required humidity is 30%
-{   
-  digitalWrite(relay, HIGH);   //on
-  delay(10000);                       // wait for fifteen minutes
+ if((t>=25)&&(h<=30)) //(change here the values)required temperature is 25*C and required humidity is 30%
+ {   
+  digitalWrite(relay, LOW);   //Relay LOW,fan ON.
+  delay(10000);               // wait for 10 seconds
 }
 else
 {
-  digitalWrite(relay, LOW);    // off
+  digitalWrite(relay, HIGH); // Relay HIGH, fan OFF
   delay(1000);
 }
 }

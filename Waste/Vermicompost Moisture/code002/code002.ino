@@ -1,45 +1,33 @@
-#include <Wire.h>
-#include <LiquidCrystal_PCF8574.h>
+/*This code explains the working of Soil moisture sensor to find moisture level in soil
+   Uses soil moisture sensor.
+*/
 
-LiquidCrystal_PCF8574 lcd(0x3F);  // set the LCD address that was displayed
-
-int show;
-
+int sensor_pin = A1;
+int buzzer =13;
 void setup()
 {
-  int error;
-
-  digitalWrite(2,HIGH);//VCC connection
-
-  Serial.begin(115200);
-  Serial.println("LCD...");
-
-  while (! Serial);
-
-  Serial.println("Dose: check for LCD");
-
-  // See http://playground.arduino.cc/Main/I2cScanner
-  Wire.begin();
-  Wire.beginTransmission(0x3F);// set the LCD address that was displayed
-  error = Wire.endTransmission();
-  Serial.print("Error: ");
-  Serial.print(error);
-
-  if (error == 0) {
-    Serial.println(": LCD found.");
-
-  } else {
-    Serial.println(": LCD not found.");
-  } // if
-
-  lcd.begin(16, 2); // initialize the lcd
-} // setup()
+  pinMode(buzzer, OUTPUT);
+  pinMode(sensor_pin, INPUT);
+  Serial.begin(9600);
+  Serial.println("Reading From the Sensor ...");
+  delay(2000);
+}
 
 void loop()
 {
-    lcd.setBacklight(255);
-    lcd.setCursor(0, 0);
-    lcd.print("Total output:");
-    lcd.setCursor(0, 1);
-    lcd.print("L");
-} // loop()
+  int moisture  = analogRead(sensor_pin);
+  Serial.println(moisture);
+  delay(50);
+  if (moisture >0 && moisture < 400)  //Change the moisture range value here
+  {
+    tone(buzzer, 1000, 500);
+    delay(500);
+  }
+  else if (moisture > 401 && moisture < 1023 {
+    digitalWrite(buzzer, LOW);
+  }
+  delay(500);
+}
+}
+
+

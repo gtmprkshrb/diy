@@ -1,11 +1,6 @@
-/*
-  Liquid flow rate sensor -DIYhacking.com Arvind Sanjeev
-  Measure the liquid/water flow rate using this code.
-  Connect Vcc and Gnd of sensor to arduino, and the
-  signal line to arduino digital pin 2.*/
-
-
-
+/*This code explains the Lung capacity level checks depending on the air flow of a person
+ * Uses Flow sensor, LCD I2c and small pipe to blow air
+ */
 #include <Wire.h>
 #include <LiquidCrystal_PCF8574.h>
 LiquidCrystal_PCF8574 lcd(0x27);
@@ -32,7 +27,7 @@ void setup()
 {
   lcd.begin(16, 2);
   // Initialize a serial connection for reporting values to the host
-  Serial.begin(115200);
+  Serial.begin(9600);
   //lcd.init();
   //lcd.init();
   //lcd.backlight();
