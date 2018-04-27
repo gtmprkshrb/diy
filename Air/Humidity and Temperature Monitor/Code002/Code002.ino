@@ -1,6 +1,6 @@
 #include <DHT.h>
 #include <LiquidCrystal_PCF8574.h>
-LiquidCrystal_PCF8574 lcd(0x27); //change the adress to 0x3F if necessary
+LiquidCrystal_PCF8574 lcd(0x27); //change the adress to 0x3F , if necessary
 
 #define DHTPIN 2     // what pin we're connected to
 
@@ -62,7 +62,7 @@ void loop() {
   lcd.print("Himidity is (%t)");
   lcd.print(h);
 
-  if (t < 30)
+  if (t < 30) 
   {
     lcd.setCursor(0, 2);
     lcd.print("Its warm");
