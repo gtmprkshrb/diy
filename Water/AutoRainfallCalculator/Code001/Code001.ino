@@ -1,7 +1,7 @@
 /*this code explains the working of distance sensor*/
-
-#define trigPin 11
-#define echoPin 12
+/*this code explains the working of distance sensor*/
+#define trigPin 12
+#define echoPin 11
 
 void setup() {
   Serial.begin (9600);
