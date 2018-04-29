@@ -1,34 +1,40 @@
-#include <NewPing.h>
-#include <Servo.h> 
+/*This code explains the working of smart toilet with distance sensor and servo motor, which
+ * is fitted near the handle of  the flush tank.
+ */
+#include <Servo.h>
 
-#define TRIGGER_PIN  11  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN     12  // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+int servoPin = 10; //digital pin 10
 
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+Servo Servo1;
 
-int servoPin = 3; 
-Servo Servo1; 
+#define trigPin 11
+#define echoPin 12
 
 void setup() {
-  Serial.begin(115200); // Open serial monitor at 115200 baud to see ping results.
-   // initialize digital pin LED_BUILTIN as an output.
- Servo1.attach(servoPin); 
- ;
+  Serial.begin (9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Servo1.attach(servoPin);
 }
 
 void loop() {
-  delay(2000);                     // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
-  Serial.print("Ping: ");
-  Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print result (0 = outside set distance range)
-  Serial.println("cm");
-  Servo1.write(0); 
-     if (sonar.ping_cm()>20)
-  { Servo1.write(0); 
-                       // wait for a second
+  int timetaken, dist;
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(1000);
+  digitalWrite(trigPin, LOW);
+  timetaken = pulseIn(echoPin, HIGH);
+  dist = (timetaken / 2) * 0.034049 ;
+  if (dist > 20) {
+    Servo1.write(0);
+    delay(1000); // wait for a second
   }
 
-  else 
-  {Servo1.write(90); 
+  else
+  {
+    Servo1.write(90);
   }
+
+  delay(500);
+
 }
+

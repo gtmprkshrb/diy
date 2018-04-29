@@ -1,4 +1,0 @@
-1. Easily helps to detect the rainfall depending on rain at the time.
-2. Used in car wipers to sense the rainfal.
-3. Used in weather station to know and predict the rainfall.
-4. for irrigation, helps farmers to automatically water fields with other sensors combined.

@@ -1,3 +1,4 @@
+/*This code explains the function of Distance sensor*/
 #define trigPin 11
 #define echoPin 12
 
