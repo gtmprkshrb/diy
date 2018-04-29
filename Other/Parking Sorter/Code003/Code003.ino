@@ -1,9 +1,9 @@
 
 #define trigPin 11
 #define echoPin 12
-int r = 9;
+int r = 7;
 int g = 8;
-int b = 7;
+int b = 9;
 int timetaken, dist;
 
 void setup() {
@@ -34,10 +34,10 @@ void loop() {
   }
   delay(500);
 
-  if(dist <= 10){
+  if (dist <= 10) {
     red();
   }
-  else if (dist >=11 && dist <= 20){
+  else if (dist >= 11 && dist <= 20) {
     orange();
   }
   else {

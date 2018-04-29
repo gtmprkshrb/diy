@@ -1,3 +1,9 @@
+/*
+  Blink
+  Turns on an LED on for one second, then off for one second, repeatedly.
+  Common Ground version
+*/
+
 int r = 9;
 int g = 8;
 int b = 7;
@@ -11,23 +17,20 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-//  blinkred();
-//  blinkblue();
-//  blinkgreen();
-//  blinkyellow();
-//  blinkpurple();
-//  blinkorange();
-//  blinkwhite();// wait for a second
-//  red();
-//  blue();
-//  green();
+  blinkred();
+  blinkblue();
+  blinkgreen();
+  blinkyellow();
+  blinkpurple();
+  blinkorange();
+  blinkwhite();// wait for a second
+  red();
+  blue();
+  green();
   yellow();
   purple();
   orange();
   white();
-
-off();
-
 }
 
 void blinkred() {

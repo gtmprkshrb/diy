@@ -1,6 +1,9 @@
+/*This code exaplins the working of distance sensor that measures distance or height of object.
+Test the sensor with soild objects like scale, notebook or your own hand
+*/
 
-#define trigPin 12
-#define echoPin 11
+#define trigPin 12 //Digital pin 12
+#define echoPin 11 //Digital pin 11
 
 void setup() {
   Serial.begin (9600);
@@ -15,8 +18,9 @@ void loop() {
   digitalWrite(trigPin, LOW);
   timetaken = pulseIn(echoPin, HIGH);
   dist = (timetaken / 2) * 0.034049 ;
-  if (dist >= 300 || dist <= 0) {
-    Serial.print("Out Of Range");
+  if (dist >= 300 || dist <= 2) //CHANGE
+  {
+    Serial.print("\n Out Of Range");
   }
   else {
 
@@ -25,5 +29,5 @@ void loop() {
     Serial.print( dist);
 
   }
-  delay(500);
+  delay(1000);
 }

@@ -1,29 +1,32 @@
-
 #define trigPin 12
 #define echoPin 11
+int buzzer = 13;
 
 void setup() {
   Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
+  pinMode(buzzer, OUTPUT);
 }
 
 void loop() {
+  delay(100);
   int timetaken, dist;
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(1000);
   digitalWrite(trigPin, LOW);
   timetaken = pulseIn(echoPin, HIGH);
   dist = (timetaken / 2) * 0.034049 ;
-  if (dist >= 300 || dist <= 0) {
-    Serial.print("Out Of Range");
+  Serial.print("Distance in CM:");
+  Serial.println(dist);
+  if (dist > 0 && dist < 46) //Change the distance range value here
+  {
+    tone(buzzer, 1000, 500);
+    delay(500);
   }
-  else {
-
-    Serial.println("\n Distance in CM: ");
-
-    Serial.print( dist);
-
+  else  {
+    digitalWrite(buzzer, LOW);
   }
   delay(500);
 }
+

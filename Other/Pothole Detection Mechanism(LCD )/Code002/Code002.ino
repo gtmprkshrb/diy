@@ -1,14 +1,14 @@
 #include <Adafruit_FONA.h>
 #include <SoftwareSerial.h>
 
-#define FONA_RX 9
-#define FONA_TX 10
+#define FONA_RX 5
+#define FONA_TX 6
 
-//#define FONA_RST 4
+#define FONA_RST 4
 SoftwareSerial fona (FONA_TX, FONA_RX);
 char replybuffer[255];
-#define trigPin 6
-#define echoPin 7
+#define trigPin 12
+#define echoPin 11
 
 void setup() {
 

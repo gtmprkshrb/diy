@@ -1,5 +1,7 @@
-#define trigPin 7
-#define echoPin 8
+/*This code exaplins the working of distance sensor*/
+
+#define trigPin 12
+#define echoPin 11
 
 void setup() {
   Serial.begin (9600);
@@ -14,7 +16,8 @@ void loop() {
   digitalWrite(trigPin, LOW);
   timetaken = pulseIn(echoPin, HIGH);
   dist = (timetaken / 2) * 0.034049 ;
-  if (dist >= 300 || dist <= 2) {
+  if (dist >= 300 || dist <= 2) //CHANGE
+  {
     Serial.print("\n Out Of Range");
   }
   else {
