@@ -1,6 +1,6 @@
 /*This code explains the working of moisture sensor*/
 
-int sensorpin = A0;
+int sensorpin = A1;
 void setup()
 {
   Serial.begin(9600);

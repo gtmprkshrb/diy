@@ -5,7 +5,7 @@
 #include <LiquidCrystal_PCF8574.h>
 LiquidCrystal_PCF8574 lcd(0x27); // address of LCD, change to 0x3F if needed
 
-#define sensorpin A0
+#define sensorpin A1
 
 void setup() {
   Serial.begin (9600);
@@ -21,7 +21,7 @@ void setup() {
 }
 void loop() {
   delay(500);
-  int sensorValue = analogRead(A0);
+  int sensorValue = analogRead(sensorpin);
   Serial.println(sensorValue);
   if (sensorValue  <= 400) //change the value if necessary
   {

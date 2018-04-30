@@ -1,8 +1,8 @@
-int soilsensor = A0;
+int soilsensor = A1;
 void setup() {
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
-  pinMode(13,OUTPUT);
+
 }
 
 
@@ -12,10 +12,5 @@ void loop() {
   Serial.println(sensorValue);
   delay(1000);
 
-  if(sensorValue < 400){
-    digitalWrite(13,HIGH);
-  }
-  else{
-    digitalWrite(13,LOW);
-  }
+
 }
