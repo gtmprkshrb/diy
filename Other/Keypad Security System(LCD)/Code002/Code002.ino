@@ -1,17 +1,17 @@
-//Student idea of Intruder Detection for Saftey in Homes with
+//Idea of Intruder Detection for Saftey in Homes with
 //Keypad , LCD and Buzzer.
 
 #include <Wire.h>
 #include <LiquidCrystal_PCF8574.h>
-LiquidCrystal_PCF8574 lcd(0x27); // address of LCD
+LiquidCrystal_PCF8574 lcd(0x27); // address of LCD, change to 0x3F if needed
 #include <Keypad.h>
 
 #define Password_Length 8
 
-int signalPin = 11;
+int buzzer = 13;
 
 char Data[Password_Length];
-char Master[Password_Length] = "123A456";
+char Master[Password_Length] = "123A456";//change the password if needed
 byte data_count = 0, master_count = 0;
 bool Pass_is_good;
 char customKey;
@@ -41,7 +41,7 @@ void setup() {
   lcd.print("Hello ");
   delay(1000);
   lcd.clear();
-  pinMode(signalPin, OUTPUT);
+  pinMode(buzzer, OUTPUT);
 }
 
 void loop() {
@@ -68,9 +68,9 @@ void loop() {
     }
     else {
       lcd.print("Incorrect");
-      digitalWrite(signalPin, HIGH);
+      digitalWrite(buzzer, HIGH);
       delay(3000);
-      digitalWrite(signalPin, LOW);
+      digitalWrite(buzzer, LOW);
     }
 
     lcd.clear();

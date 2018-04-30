@@ -16,7 +16,7 @@ void loop() {
   digitalWrite(trigPin, LOW);
   timetaken = pulseIn(echoPin, HIGH);
   dist = (timetaken / 2) * 0.034049 ;
-  if (dist >= 300 || dist <= 2) //CHANGE
+  if (dist >= 300 || dist <= 2) //CHANGE the value here
   {
     Serial.print("\n Out Of Range");
   }

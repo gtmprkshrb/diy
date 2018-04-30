@@ -1,3 +1,7 @@
+/*This code explains the working of Drain clog detector which detects the drain with distance sensor 
+ * and buzzer beeps based on height of drain
+ */
+
 #define trigPin 12
 #define echoPin 11
 int buzzer = 13;

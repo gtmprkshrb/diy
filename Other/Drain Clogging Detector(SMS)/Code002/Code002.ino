@@ -1,41 +1,30 @@
-#define trigPin 12
-#define echoPin 11
-int buzzer = 13;
+#include <Adafruit_FONA.h>
+#include <SoftwareSerial.h>
+
+#define FONA_RX 5
+#define FONA_TX 6
+#define FONA_RST 4
+SoftwareSerial fona (FONA_TX, FONA_RX);
+char replybuffer[255];
 
 void setup() {
-  Serial.begin (9600);
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  pinMode(buzzer, OUTPUT);
+  Serial.begin(9600);
+  fona.begin(9600);
 }
 
 void loop() {
-  delay(100);
-  int timetaken, dist;
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(1000);
-  digitalWrite(trigPin, LOW);
-  timetaken = pulseIn(echoPin, HIGH);
-  dist = (timetaken / 2) * 0.034049 ;
-  Serial.print("Distance in CM:");
-  Serial.println(dist);
-  if (distance <= 10) // change the distance here
-  {
-    Serial.println (" Drain Blocked ");
-    Serial.print (" Distance= ");
-    Serial.println (distance);
-    digitalWrite (buzzer, HIGH);
-    delay (1000);
-  }
-  else {
-    Serial.println (" Drain Clear ");
-    Serial.print (" Distance= ");
-    Serial.println (distance);
-    digitalWrite (buzzer, LOW);
-    delay (1000);
-  }
+  fona.print("AT+CMGF=1\r");
+  delay(1000);            //for setting the network //
+  fona.print("AT+CMGS=\"+91xxxxxxxx\"\r"); //change your number
+  
+  delay(1000);                  
+  fona.print("Hi");   
+  fona.print("\r");
 
-}
-delay(500);
+  delay(20000);        //gap in sending messages//
+  fona.println((char)26);
+  fona.println();
+ 
+  delay(10000);
 }
 

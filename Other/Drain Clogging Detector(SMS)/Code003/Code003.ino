@@ -1,51 +1,54 @@
-// ---------------------------------------------------------------------------
-// Example NewPing library sketch that does a ping about 20 times per second.
-// ---------------------------------------------------------------------------
-
-#include <NewPing.h>
-
-#define TRIGGER_PIN  10  // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define ECHO_PIN     11  // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define MAX_DISTANCE 200 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
-
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+/*This code explains the working of Drain clog detector.
+ * Based on distance sensor, drain will be noted and SMS will be send to user or authorities to
+ * clear the drain
+ */
 
 #include <Adafruit_FONA.h>
 #include <SoftwareSerial.h>
 
-#define FONA_RX 2
-#define FONA_TX 3
-
-//#define FONA_RST 4
+#define FONA_RX 5
+#define FONA_TX 6
+#define FONA_RST 4
 SoftwareSerial fona (FONA_TX, FONA_RX);
 char replybuffer[255];
 
-void setup() {
-  Serial.begin(115200); // Open serial monitor at 115200 baud to see ping results.
+#define trigPin 12
+#define echoPin 11
 
+void setup() {
   Serial.begin(9600);
   fona.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 }
 
 void loop() {
-  delay(5000);                     // Wait 50ms between pings (about 20 pings/sec). 29ms should be the shortest delay between pings.
-  Serial.print("Ping: ");
-  Serial.print(sonar.ping_cm()); // Send ping, get distance in cm and print result (0 = outside set distance range)
-  Serial.println("cm");
+  delay(100);
+  int timetaken, dist;
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(1000);
+  digitalWrite(trigPin, LOW);
+  timetaken = pulseIn(echoPin, HIGH);
+  dist = (timetaken / 2) * 0.034049 ;
+  Serial.print("Distance in CM:");
+  Serial.println(dist);
 
   fona.print("AT+CMGF=1\r");
-  delay(1000);            //for setting the network //
-  fona.print("AT+CMGS=\"+919916192657\"\r");
+  delay(1000);            //for setting the network 
+  fona.print("AT+CMGS=\"+91xxxxxxxxx\"\r"); //Change your number
 
-  if (sonar.ping_cm() > 50)
-
-  { fona.print("Saisbudtini");
+  if (distance <= 10) // change the distance here
+  {
+    Serial.println (" Drain Blocked ");
+    Serial.print (" Distance= ");
+    Serial.println (distance);
+    fona.print("Drain Blocked");
     fona.print("\r");
+    delay(10000);        //gap in sending messages//
+    fona.println((char)26);
+    fona.println();
+    delay(10000);
   }
-
-  delay(10000);        //gap in sending messages//
-  fona.println((char)26);
-  fona.println();
-
-  delay(10000);
+  delay(500);
 }
+
