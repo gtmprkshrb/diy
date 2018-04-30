@@ -1,10 +1,10 @@
 int rainsense = A2; // analog sensor input pin 0
-int buzzerout = 8; // digital output pin 10 - buzzer output
-int countval = 0; // counter value starting from 0 and goes up by 1 every second
+int buzzer = 13; // digital output pin 13 - buzzer output
+
 
 void setup() {
   Serial.begin(9600);
-  pinMode(buzzerout, OUTPUT);
+  pinMode(buzzer, OUTPUT);
   pinMode(rainsense, INPUT);
 }
 void loop() {
@@ -14,12 +14,12 @@ void loop() {
   // from heavy rain - no rain.
 
   if (rainSenseReading < 350) {
-    digitalWrite(buzzerout, LOW);
+    digitalWrite(buzzer, LOW);
     delay(200);
-    //countval++; // increment count value
+    
   }
   else if (rainSenseReading > 350 && rainSenseReading < 900) { // if not raining
-    digitalWrite(buzzerout, HIGH); // turn off buzzer
+    digitalWrite(buzzer, HIGH); // turn off buzzer
     delay(500);
     digitalWrite(buzzerout, LOW);
   }

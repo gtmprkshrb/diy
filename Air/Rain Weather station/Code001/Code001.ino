@@ -1,4 +1,4 @@
-int rainsense = A2; // analog sensor input pin 0
+int rainsense = A2; // analog sensor input pin 2
 
 
 void setup() {
