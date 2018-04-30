@@ -1,5 +1,5 @@
 /*this code explains the function of soil moisture sensor*/
-int sensor_pin = A0;
+int sensor_pin = A1;
 
 void setup()
 {

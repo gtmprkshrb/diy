@@ -9,6 +9,8 @@
 #define FONA_TX 6
 #define FONA_RST 4
 SoftwareSerial fona (FONA_TX, FONA_RX);
+
+Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 char replybuffer[255];
 
 
