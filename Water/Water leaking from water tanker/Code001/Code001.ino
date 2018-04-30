@@ -1,7 +1,8 @@
+/*This code explains the working of flow sensor*/
 
-
-byte sensorInterrupt = 0;  // 0 = digital pin 2
-byte sensorPin       = 2;
+byte statusLed    = 13;
+byte sensorInterrupt = 0;
+byte sensorPin       = 2; //digital pin 2
 
 // The hall-effect flow sensor outputs approximately 4.5 pulses per second per
 // litre/minute of flow.
@@ -21,6 +22,9 @@ void setup()
   // Initialize a serial connection for reporting values to the host
   Serial.begin(9600);
 
+  // Set up the status LED line as an output
+  pinMode(statusLed, OUTPUT);
+  digitalWrite(statusLed, HIGH);  // We have an active-low LED attached
 
   pinMode(sensorPin, INPUT);
   digitalWrite(sensorPin, HIGH);

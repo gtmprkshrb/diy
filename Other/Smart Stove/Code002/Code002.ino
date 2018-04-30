@@ -1,3 +1,7 @@
+/*This code explains the working of DS18b20 sensor
+ * to find temperature of a substance
+ */
+
 // Include the libraries we need
 #include <OneWire.h>
 #include <DallasTemperature.h>

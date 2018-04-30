@@ -1,7 +1,7 @@
 
-
-byte sensorInterrupt = 0;  // 0 = digital pin 2
+byte sensorInterrupt = 0;  
 byte sensorPin       = 2;
+
 
 // The hall-effect flow sensor outputs approximately 4.5 pulses per second per
 // litre/minute of flow.
@@ -20,8 +20,6 @@ void setup()
 
   // Initialize a serial connection for reporting values to the host
   Serial.begin(9600);
-
-
   pinMode(sensorPin, INPUT);
   digitalWrite(sensorPin, HIGH);
 
@@ -83,9 +81,6 @@ void loop()
     Serial.print(totalMilliLitres);
     Serial.println("mL");
     Serial.print("\t");       // Print tab space
-    Serial.print(totalMilliLitres / 1000);
-    Serial.print("L");
-
 
     // Reset the pulse counter so we can start incrementing again
     pulseCount = 0;

@@ -1,7 +1,12 @@
-
+/*This code helps to control the leakage of overhead water tanks
+   If tank fills 3/4th water , to stop leakage , with help of solenoid valve
+   excess water will be passed to other nearby tank
+*/
 
 byte sensorInterrupt = 0;  // 0 = digital pin 2
 byte sensorPin       = 2;
+
+int solenoid = 3;  digital pin 3
 
 // The hall-effect flow sensor outputs approximately 4.5 pulses per second per
 // litre/minute of flow.
@@ -21,7 +26,7 @@ void setup()
   // Initialize a serial connection for reporting values to the host
   Serial.begin(9600);
 
-
+  pinMode(solenoidpin, OUTPUT);
   pinMode(sensorPin, INPUT);
   digitalWrite(sensorPin, HIGH);
 
@@ -83,10 +88,15 @@ void loop()
     Serial.print(totalMilliLitres);
     Serial.println("mL");
     Serial.print("\t");       // Print tab space
-    Serial.print(totalMilliLitres / 1000);
-    Serial.print("L");
-
-
+    //Solenoid helps to stop overflow of water and pass it nearby tank
+    if (totalMilliLitres > 5000) {
+      digitalWrite(solenoidpid, LOW);
+      delay(1000);
+    }
+    else {
+      digitalWrite(solenoidpid, LOW);
+      delay(1000);
+    }
     // Reset the pulse counter so we can start incrementing again
     pulseCount = 0;
 

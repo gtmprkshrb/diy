@@ -1,7 +1,7 @@
 /*This code explains the working of Drain clog detector.
- * Based on distance sensor, drain will be noted and SMS will be send to user or authorities to
- * clear the drain
- */
+   Based on distance sensor, drain will be noted and SMS will be send to user or authorities to
+   clear the drain
+*/
 
 #include <Adafruit_FONA.h>
 #include <SoftwareSerial.h>
@@ -10,6 +10,8 @@
 #define FONA_TX 6
 #define FONA_RST 4
 SoftwareSerial fona (FONA_TX, FONA_RX);
+
+Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 char replybuffer[255];
 
 #define trigPin 12
@@ -34,7 +36,7 @@ void loop() {
   Serial.println(dist);
 
   fona.print("AT+CMGF=1\r");
-  delay(1000);            //for setting the network 
+  delay(1000);            //for setting the network
   fona.print("AT+CMGS=\"+91xxxxxxxxx\"\r"); //Change your number
 
   if (distance <= 10) // change the distance here

@@ -1,4 +1,4 @@
-int sensorpin = A1; //Analog pin 1
+int sensorpin = A0; //Analog pin 0
 const int MOISTURE_LEVEL = 700; // change value depending on moisture level in dry and wet soil
 
 int solenoidpin = 3;

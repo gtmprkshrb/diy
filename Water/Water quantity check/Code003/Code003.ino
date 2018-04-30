@@ -1,7 +1,11 @@
 
 
-byte sensorInterrupt = 0;  // 0 = digital pin 2
-byte sensorPin       = 2;
+
+int soilpin = A1;
+byte sensorInterrupt = 0;
+byte sensorPin       = 2; //digital pin 2
+
+int solenoidpin = 3; //digital pin 3
 
 // The hall-effect flow sensor outputs approximately 4.5 pulses per second per
 // litre/minute of flow.
@@ -20,6 +24,9 @@ void setup()
 
   // Initialize a serial connection for reporting values to the host
   Serial.begin(9600);
+  pinMode(solenoidpin, OUTPUT);
+  digitalWrite(sensorPin, LOW);
+  pinMode(soilPin, INPUT);
 
 
   pinMode(sensorPin, INPUT);
@@ -42,7 +49,9 @@ void setup()
 */
 void loop()
 {
-
+  int moisture  = analogRead(soilpin);
+  Serial.println(moisture);
+  delay(50);
   if ((millis() - oldTime) > 1000)   // Only process counters once per second
   {
     // Disable the interrupt while calculating flow rate and sending the value to
@@ -83,10 +92,14 @@ void loop()
     Serial.print(totalMilliLitres);
     Serial.println("mL");
     Serial.print("\t");       // Print tab space
-    Serial.print(totalMilliLitres / 1000);
-    Serial.print("L");
-
-
+    if ( moisture > 400 && totalMilliLitres > 5000) { //change here
+      digitalWrite(solenoid pin, HIGH);
+      delay(1000);
+    }
+    else if (moisture < 400 ) {
+      digitalWrite(solenoid pin, LOW);
+      delay(1000);
+    }
     // Reset the pulse counter so we can start incrementing again
     pulseCount = 0;
 
