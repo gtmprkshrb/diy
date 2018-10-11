@@ -18,8 +18,8 @@
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 float h, t;
-#define WLAN_SSID  "//*your ssid here" // Please type your Wifi SSID name 
-#define WLAN_PASS  "//password here" // Please type your Wifi password 
+//#define WLAN_SSID  "//*your ssid here" // Please type your Wifi SSID name 
+//#define WLAN_PASS  "//password here" // Please type your Wifi password 
 #define BROKER_IP  "13.71.3.239" // The IP of the machine where the broker is running
 #define BROKER_PORT 1883
 #define CLIENT_NAME "Air"
@@ -49,7 +49,7 @@ int average = 0;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  WiFi.begin(WLAN_SSID, WLAN_PASS);
+ 
   dht.begin();
   lcd.init();   // initializing the LCD
   lcd.backlight();
@@ -160,15 +160,19 @@ void senddata() {
   publishFloatValue(average, "RB/AQM/Breathe/003/Dust");
 }
 
-void connectToWiFi()
-{
-  Serial.print("Connecting to WIFI");
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    Serial.print(".");
-    delay(500);
+void connectToWiFi(){
+  WiFiManager wifiManager;
+  wifiManager.setTimeout(60);
+
+  if (!wifiManager.autoConnect("SetupWifionAQM")) {
+    Serial.println("failed to connect and hit timeout");
+    delay(3000);
+    //reset and try again, or maybe put it to deep sleep
+    ESP.reset();
+    delay(5000);
   }
-  Serial.println("Connected to WIFI!");
+  //if you get here you have connected to the WiFi
+  Serial.println("connected...yeey :)"); 
 }
 void connectToBroker() {
 
@@ -218,10 +222,13 @@ void showonlcd() {
   lcd.print("PM2.5: ");
   lcd.print(average);
 
-  if (average > 1 && average  <= 65) {
+  if (average > 1 && average  <= 50) {
     lcd.print (" GOOD ");
   }
-  else if (average >= 66) {
-    lcd.print (" BAD ");
+  else if (average >= 51 && average <=100) {
+    lcd.print ("MODERATE");
+  }
+    else if (average >101){
+      lcd.print("  BAD  ");
   }
 }
