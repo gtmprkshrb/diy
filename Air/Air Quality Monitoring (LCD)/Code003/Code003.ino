@@ -18,8 +18,8 @@
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 float h, t;
-#define WLAN_SSID  "//*your ssid here" // The SSID of your local LAN where a MQTT-broker is running
-#define WLAN_PASS  "//password here" // The WIFI password for your local lan
+#define WLAN_SSID  "//*your ssid here" // Please type your Wifi SSID name 
+#define WLAN_PASS  "//password here" // Please type your Wifi password 
 #define BROKER_IP  "13.71.3.239" // The IP of the machine where the broker is running
 #define BROKER_PORT 1883
 #define CLIENT_NAME "Air"
